@@ -1,84 +1,67 @@
 <x-app-layout>
+<div class="max-w-xl mx-auto py-12 px-4">
 
-<div class="max-w-md mx-auto py-8">
+    <div class="mb-5">
+        <a href="{{ route('forma-pagamentos.index') }}"
+           class="text-zinc-400 hover:text-white text-sm font-semibold tracking-wide transition inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            Voltar à Lista
+        </a>
+    </div>
 
-    <a href="{{ route('forma-pagamentos.index') }}"
-       class="text-red-500 hover:text-red-400 mb-6 inline-block font-semibold">
-        ← Voltar
-    </a>
+    <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-xl shadow-2xl">
 
-    <div class="bg-zinc-950 border border-zinc-800 p-6 rounded-xl shadow-xl">
-
-        <h1 class="text-xl font-bold mb-6 text-white border-b border-zinc-800 pb-3">
-            Detalhes da <span class="text-red-600">Forma de Pagamento</span>
+        <h1 class="text-xl font-bold text-white mb-6 border-b border-zinc-900 pb-4 tracking-tight">
+            Detalhes da <span class="text-red-500">Forma de Pagamento</span>
         </h1>
 
-        <div class="space-y-4">
-
+        <div class="space-y-5">
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
-                    ID
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">
+                    Código de Identificação (ID)
                 </label>
-
-                <p class="text-white">
+                <p class="text-zinc-400 font-mono text-base">
                     #{{ $formaPagamento->id }}
                 </p>
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
-                    Tipo
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">
+                    Tipo de Pagamento
                 </label>
-
-                <p class="text-white">
+                <p class="text-white text-lg font-semibold">
                     {{ $formaPagamento->tipo }}
                 </p>
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
-                    Descrição
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">
+                    Descrição Atribuída
                 </label>
-
-                <p class="text-white">
+                <p class="text-white text-base text-zinc-300">
                     {{ $formaPagamento->descricao }}
                 </p>
             </div>
 
             <div>
-                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">
-                    Criado em
+                <label class="block text-xs font-bold uppercase tracking-wider text-zinc-500 mb-1">
+                    Data de Registro
                 </label>
-
-                <p class="text-white">
-                    {{ $formaPagamento->created_at->format('d/m/Y H:i') }}
+                <p class="text-zinc-400 text-sm">
+                    {{ $formaPagamento->created_at->format('d/m/Y \à\s H:i') }}
                 </p>
             </div>
-
         </div>
 
-        <div class="mt-6">
-
+        <div class="mt-8 pt-4 border-t border-zinc-900 flex gap-3">
             <a href="{{ route('forma-pagamentos.edit', $formaPagamento->id) }}"
-               class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg">
-                Editar
+               class="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-amber-500 font-semibold px-4 py-2 text-sm rounded-lg transition-colors flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                Editar Registro
             </a>
-
         </div>
 
     </div>
 
 </div>
-
 </x-app-layout>
-
-
-
-
-
-
-
-
-
-
-

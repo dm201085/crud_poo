@@ -3,22 +3,26 @@
     
     <div class="mb-5">
         <a href="{{ route('adversarios.index') }}"
-           class="text-red-600 hover:text-red-500 text-sm font-semibold tracking-wide transition flex items-center gap-1">
-            ← Cancelar e Voltar
+           class="text-zinc-400 hover:text-white text-sm font-semibold tracking-wide transition inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Cancelar e Voltar
         </a>
     </div>
 
-    <div class="bg-zinc-950/80 border border-zinc-900 p-6 rounded-xl shadow-2xl backdrop-blur-sm">
+    <div class="bg-zinc-950 border border-zinc-900 p-6 rounded-xl shadow-2xl backdrop-blur-sm">
         
         <h1 class="text-xl font-bold mb-6 text-white tracking-tight">
-            Editar <span class="text-red-600">adversário</span>
+            Editar <span class="text-red-500">Adversário</span>
         </h1>
 
         @if ($errors->any())
-            <div class="bg-zinc-900 border-l-2 border-red-600 text-red-400 text-xs p-3 rounded mb-4">
-                <ul class="space-y-0.5">
+            <div class="bg-red-950/40 border border-red-900 text-red-400 text-xs p-3 rounded-lg mb-5">
+                <ul class="space-y-1">
                     @foreach ($errors->all() as $erro)
-                        <li>• {{ $erro }}</li>
+                        <li class="flex items-center gap-1.5">
+                            <span class="w-1 h-1 rounded-full bg-red-500"></span>
+                            {{ $erro }}
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -38,7 +42,7 @@
                        name="nome"
                        value="{{ old('nome', $adversario->nome) }}"
                        required
-                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg p-2.5 text-sm text-white focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition">
+                       class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-sm text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition">
             </div>
 
             <div>
@@ -50,11 +54,11 @@
                        value="{{ old('estado', $adversario->estado) }}"
                        maxlength="2"
                        required
-                       class="w-full bg-zinc-900/50 border border-zinc-800 rounded-lg p-2.5 text-sm text-white focus:border-red-600 focus:ring-1 focus:ring-red-600 outline-none transition uppercase">
+                       class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-sm text-white focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none transition uppercase">
             </div>
 
             <button type="submit"
-                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg text-xs uppercase tracking-widest transition shadow-lg shadow-red-600/10 mt-2">
+                    class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg text-xs uppercase tracking-widest transition-colors shadow-lg shadow-red-600/10 mt-2">
                 Salvar Alterações
             </button>
         </form>

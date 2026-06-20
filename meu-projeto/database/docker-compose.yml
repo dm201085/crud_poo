@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # PHP + Apache application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: flamengo_ingressos_app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=flamengo_ingressos
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # MySQL database
+  db:
+    image: mysql:8.4
+    container_name: flamengo_ingressos_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: flamengo_ingressos
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  # PHPMyAdmin for database management
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: flamengo_ingressos_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    networks:
+      - app-network
+
+# Named volumes for persistence
+volumes:
+  db_data:
+
+# Named network for service communication
+networks:
+  flamengo_ingressos-network:
+    driver: bridge

@@ -1,104 +1,85 @@
 <x-app-layout>
+<div class="max-w-5xl mx-auto py-12 px-4">
 
-<div class="max-w-5xl mx-auto py-8">
-
-    <div class="flex justify-between items-center mb-8 border-b border-zinc-800 pb-4">
-
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight">
-            Gerenciar <span class="text-red-600">Ingressos</span>
+    <div class="flex justify-between items-center mb-8 border-b border-zinc-900 pb-5">
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-white">
+            Gerenciar <span class="text-red-500">Ingressos</span>
         </h1>
 
         <a href="{{ route('ingressos.create') }}"
-           class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">
-            Novo Ingresso
+           class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors shadow-lg shadow-red-600/10">
+            + Novo Ingresso
         </a>
-
     </div>
 
     @if(session('success'))
-        <div class="bg-green-900 text-green-300 p-3 rounded mb-4">
+        <div class="bg-emerald-950/40 border border-emerald-900 text-emerald-400 p-3 rounded-lg mb-5 text-sm">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden">
-
-        <table class="w-full">
-
+    <div class="bg-zinc-950 border border-zinc-900 rounded-xl overflow-hidden shadow-2xl">
+        <table class="w-full text-left border-collapse">
             <thead>
-                <tr class="bg-zinc-900 border-b border-zinc-800">
-                    <th class="p-4 text-left">ID</th>
-                    <th class="p-4 text-left">Setor</th>
-                    <th class="p-4 text-left">Preço</th>
-                    <th class="p-4 text-left">Quantidade</th>
-                    <th class="p-4 text-center">Ações</th>
+                <tr class="bg-zinc-900 border-b border-zinc-800 text-zinc-400 text-xs font-bold uppercase tracking-wider">
+                    <th class="p-4 w-20">ID</th>
+                    <th class="p-4">Setor</th>
+                    <th class="p-4 w-40">Preço</th>
+                    <th class="p-4 w-40">Quantidade</th>
+                    <th class="p-4 w-32 text-center">Ações</th>
                 </tr>
             </thead>
 
-            <tbody>
-
+            <tbody class="text-sm text-zinc-300 divide-y divide-zinc-900">
             @forelse($ingressos as $ingresso)
-
-                <tr class="border-b border-zinc-800 hover:bg-zinc-900">
-
-                    <td class="p-4">
+                <tr class="hover:bg-zinc-900/30 transition-colors">
+                    <td class="p-4 text-zinc-500 font-mono">
                         #{{ $ingresso->id }}
                     </td>
-
-                    <td class="p-4">
-                        {{ $ingresso->setor }}
+                    <td class="p-4 font-semibold text-white">
+                        <a href="{{ route('ingressos.show', $ingresso->id) }}" class="hover:text-red-400 transition-colors">
+                            {{ $ingresso->setor }}
+                        </a>
                     </td>
-
-                    <td class="p-4">
+                    <td class="p-4 font-medium text-zinc-100">
                         R$ {{ number_format($ingresso->preco, 2, ',', '.') }}
                     </td>
-
+                    <td class="p-4 text-zinc-400 font-mono">
+                        {{ $ingresso->quantidade }} un.
+                    </td>
                     <td class="p-4">
-                        {{ $ingresso->quantidade }}
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="{{ route('ingressos.edit', $ingresso->id) }}"
+                               class="text-zinc-400 hover:text-amber-500 transition-colors" 
+                               title="Editar">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                            </a>
+
+                            <form action="{{ route('ingressos.destroy', $ingresso->id) }}"
+                                  method="POST"
+                                  class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="text-zinc-400 hover:text-red-500 transition-colors"
+                                        onclick="return confirm('Deseja realmente excluir este ingresso?')"
+                                        title="Excluir">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </form>
+                        </div>
                     </td>
-
-                    <td class="p-4 text-center">
-
-                        <a href="{{ route('ingressos.edit', $ingresso->id) }}"
-                           class="text-amber-500 mr-3">
-                            ✏️
-                        </a>
-
-                        <form action="{{ route('ingressos.destroy', $ingresso->id) }}"
-                              method="POST"
-                              style="display:inline">
-
-                            @csrf
-                            @method('DELETE')
-
-                            <button type="submit"
-                                    class="text-red-500"
-                                    onclick="return confirm('Deseja excluir este ingresso?')">
-                                🗑️
-                            </button>
-
-                        </form>
-
-                    </td>
-
                 </tr>
-
             @empty
-
                 <tr>
-                    <td colspan="5" class="p-8 text-center text-gray-500">
-                        Nenhum ingresso cadastrado.
+                    <td colspan="5" class="p-12 text-center text-zinc-600 font-medium">
+                        Nenhum ingresso cadastrado até o momento.
                     </td>
                 </tr>
-
             @endforelse
-
             </tbody>
-
         </table>
-
     </div>
 
 </div>
-
 </x-app-layout>
