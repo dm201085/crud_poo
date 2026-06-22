@@ -1,4 +1,5 @@
-<x-app-layout>
+cp .env.example .env
+php artisan key:generate<x-app-layout>
 <div class="max-w-md mx-auto py-12 px-4">
     
     <div class="mb-5">
