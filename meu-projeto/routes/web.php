@@ -4,14 +4,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdversarioController;
 use App\Http\Controllers\IngressoController;
 use App\Http\Controllers\FormaPagamentoController;
-
-
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -28,11 +25,8 @@ Route::middleware('auth')->group(function () {
     // CRUD Ingressos
     Route::resource('ingressos', IngressoController::class);
 
-    // CRUD Formas de Pagamento
-
-
-Route::resource('forma-pagamentos', FormaPagamentoController::class);
-
+    // CRUD Forma de Pagamento
+    Route::resource('forma-pagamentos', FormaPagamentoController::class);
 });
 
 require __DIR__.'/auth.php';
